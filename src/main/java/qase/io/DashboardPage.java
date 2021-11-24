@@ -17,7 +17,7 @@ public class DashboardPage {
         profileLink.shouldBe(Condition.visible);
     }
 
-    public WorkspacePage openMyProjects() {
+    public WorkspacePage openMyWorkspace() {
         myProjectsLink.click();
         return Selenide.page(WorkspacePage.class);
 

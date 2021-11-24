@@ -9,7 +9,7 @@ public class WorkspacePage {
     @FindBy(xpath = "//a[@title='Settings']/i")
     public SelenideElement projectsHeader;
 
-    public void checkProjectsPage() {
+    public void checkWorkspacePage() {
         projectsHeader.shouldBe(Condition.visible);
 
     }

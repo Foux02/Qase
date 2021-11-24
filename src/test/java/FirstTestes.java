@@ -26,14 +26,14 @@ public class FirstTestes {
     }
 
     @Test
-    public void openProjects() {
+    public void openWorkspace() {
         LoginPage loginPage = open("https://app.qase.io/login", LoginPage.class);
         loginPage.enterLogin("Foux02@rambler.ru");
         loginPage.enterPassword("Tr@velBG209+");
         DashboardPage dashboardPage = loginPage.clickLoginBtn();
         dashboardPage.checkUserAuthorized();
-        WorkspacePage workspacePage = dashboardPage.openMyProjects();
-        workspacePage.checkProjectsPage();
+        WorkspacePage workspacePage = dashboardPage.openMyWorkspace();
+        workspacePage.checkWorkspacePage();
     }
 
 
