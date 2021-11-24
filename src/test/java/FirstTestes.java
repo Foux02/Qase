@@ -1,78 +1,44 @@
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
+import com.codeborne.selenide.Configuration;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import qase.io.DashboardPage;
+import qase.io.LoginPage;
+import qase.io.WorkspacePage;
 
-import java.util.concurrent.TimeUnit;
-
-import static org.testng.Assert.fail;
+import static com.codeborne.selenide.Selenide.open;
+import static org.openqa.selenium.devtools.v95.browser.Browser.close;
 
 public class FirstTestes {
-    private WebDriver driver;
-    private String baseUrl;
-    private boolean acceptNextAlert = true;
-    private StringBuffer verificationErrors = new StringBuffer();
-    private JavascriptExecutor js;
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        js = (JavascriptExecutor) driver;
+        Configuration.browser = "chrome";
     }
 
     @Test
-    public void testUntitledTestCase() throws Exception {
-        driver.get("https://app.qase.io/login");
-        driver.findElement(By.id("inputEmail")).click();
-        driver.findElement(By.id("inputEmail")).clear();
-        driver.findElement(By.id("inputEmail")).sendKeys("Foux02@rambler.ru");
-        driver.findElement(By.id("inputPassword")).click();
-        driver.findElement(By.id("inputPassword")).clear();
-        driver.findElement(By.id("inputPassword")).sendKeys("Tr@velBG209+");
-        driver.findElement(By.id("btnLogin")).click();
+    public void LoginAsRegisteredUser() {
+        LoginPage loginPage = open("https://app.qase.io/login", LoginPage.class);
+        loginPage.enterLogin("Foux02@rambler.ru");
+        loginPage.enterPassword("Tr@velBG209+");
+        DashboardPage dashboardPage = loginPage.clickLoginBtn();
+        dashboardPage.checkUserAuthorized();
     }
 
-    @AfterClass(alwaysRun = true)
+    @Test
+    public void openProjects() {
+        LoginPage loginPage = open("https://app.qase.io/login", LoginPage.class);
+        loginPage.enterLogin("Foux02@rambler.ru");
+        loginPage.enterPassword("Tr@velBG209+");
+        DashboardPage dashboardPage = loginPage.clickLoginBtn();
+        dashboardPage.checkUserAuthorized();
+        WorkspacePage workspacePage = dashboardPage.openMyProjects();
+        workspacePage.checkProjectsPage();
+    }
+
+
+    @AfterMethod
     public void tearDown() throws Exception {
-        driver.quit();
-        String verificationErrorString = verificationErrors.toString();
-        if (!"".equals(verificationErrorString)) {
-            fail(verificationErrorString);
-        }
-    }
-
-    private boolean isElementPresent(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    private boolean isAlertPresent() {
-        try {
-            driver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
-    }
-
-    private String closeAlertAndGetItsText() {
-        try {
-            Alert alert = driver.switchTo().alert();
-            String alertText = alert.getText();
-            if (acceptNextAlert) {
-                alert.accept();
-            } else {
-                alert.dismiss();
-            }
-            return alertText;
-        } finally {
-            acceptNextAlert = true;
-        }
+        close();
     }
 }
