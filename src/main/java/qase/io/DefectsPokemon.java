@@ -14,7 +14,20 @@ public class DefectsPokemon {
     @FindBy(xpath = "//a[@href='/defect/POKEMON/create']")
     public SelenideElement createDefectLink;
 
+    @FindBy(linkText = "Defect75")
+    public SelenideElement nameNewDefect;
+
+    @FindBy(xpath = "//td[8]/div/a/i")
+    public SelenideElement choiceDelete;
+
+    @FindBy(linkText = "Delete")
+    public SelenideElement deleteDefect;
+
+    @FindBy(xpath = "//button[.='Delete']")
+    public SelenideElement deleteBtn;
+
     public void checkDefectsPokemon () {
+
         defectsPokemonProject.shouldBe(Condition.visible);
     }
 
@@ -22,4 +35,22 @@ public class DefectsPokemon {
         createDefectLink.click();
         return page (CreateDefect.class);
     }
+
+    public void checkCreateNewDefect (String defectName) {
+
+        nameNewDefect.shouldBe(Condition.text(defectName));
+    }
+
+    public void setDeleteDefect() {
+        choiceDelete.click();
+        deleteDefect.click();
+        deleteBtn.click();
+    }
+
+    public void checkDeleteDefect() {
+
+        nameNewDefect.shouldBe(Condition.visible);
+    }
+
+
 }

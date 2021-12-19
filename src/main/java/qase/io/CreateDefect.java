@@ -4,6 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class CreateDefect {
 
     @FindBy(xpath = "//div[@id='react-app']/div[@class='app']/div//h1")
@@ -15,11 +17,25 @@ public class CreateDefect {
     @FindBy(xpath = "//div[@id='undefinedGroup']/div/div/div/div[2]/div/div[2]/div/div")
     public SelenideElement actualResult;
 
-    @FindBy(xpath = "//div[@id='severityGroup']/div/div/div[2]/div")
+    @FindBy(id = "severityGroup")
     public SelenideElement severity;
 
+
+    @FindBy(xpath = "//div[@id='react-select-3-option-0']")
+    public SelenideElement severityNotSet;
+    @FindBy(xpath = "//div[@id='react-select-3-option-1']")
+    public SelenideElement severityBlocker;
     @FindBy(xpath = "//div[@id='react-select-3-option-2']")
     public SelenideElement severityCritical;
+    @FindBy(xpath = "//div[@id='react-select-3-option-3']")
+    public SelenideElement severityMajor;
+    @FindBy(xpath = "//div[@id='react-select-3-option-4']")
+    public SelenideElement severityNormal;
+    @FindBy(xpath = "//div[@id='react-select-3-option-5']")
+    public SelenideElement severityMinor;
+    @FindBy(xpath = "//div[@id='react-select-3-option-6']")
+    public SelenideElement severityTrivial;
+
 
     @FindBy(xpath = "//div[@id='react-app']/div/div/div/div/form/div[5]/div/div/div/div[2]/div")
     public SelenideElement assignee;
@@ -30,8 +46,6 @@ public class CreateDefect {
     @FindBy(xpath = "//button[.='Create defect']")
     public SelenideElement saveDefectBtn;
 
-    @FindBy(className = "defect-title")
-    public SelenideElement nameNewDefect;
 
 
     public void checkCreateDefect () {
@@ -39,9 +53,9 @@ public class CreateDefect {
         createNewDefect.shouldBe(Condition.visible);
     }
 
-    public void setSeverityCritical() {
+    public void setSeverityCritical(String usura) {
         severity.click();
-        severityCritical.click();
+        getPriorityDefect(usura);
     }
 
     public void setAssigneeProf() {
@@ -49,16 +63,33 @@ public class CreateDefect {
         assigneeProf.click();
     }
 
-    public void addCreateNewDefect (String defectName, String resultText) {
+    public void addCreateNewDefect (String defectName, String resultText, String usura) {
         defectTitle.click();
         defectTitle.sendKeys(defectName);
         actualResult.click();
         actualResult.sendKeys(resultText);
-        setSeverityCritical();
+        setSeverityCritical(usura);
         setAssigneeProf();
         saveDefectBtn.click();
     }
-    public void checkCreateNewDefect (String defectName) {
-        nameNewDefect.shouldBe(Condition.text(defectName));
+
+    public void getPriorityDefect(String usura) {
+
+        switch (usura) {
+            case "0": severityNotSet.click();
+                break;
+            case "1": severityBlocker.click();
+                break;
+            case "2": severityCritical.click();
+                break;
+            case "3": severityMajor.click();
+                break;
+            case "4": severityNormal.click();
+                break;
+            case "6": severityMinor.click();
+                break;
+            case "7": severityTrivial.click();
+                break;
+        }
     }
 }

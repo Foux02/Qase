@@ -4,6 +4,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import qase.io.*;
 import qase.io.util.CardData;
+import qase.io.util.PriorityData;
+import qase.io.util.UserData;
 
 import static com.codeborne.selenide.Selenide.closeWindow;
 import static com.codeborne.selenide.Selenide.open;
@@ -20,10 +22,12 @@ public class FirstTestes {
 
     @Test
     public void openCreateDefect() {
-        CardData create = new CardData("Defect35", "Not Text");
+        UserData openWeb = new UserData("Foux02@rambler.ru","Tr@velBG209+");
+        CardData create = new CardData("Defect75", "Not Text");
+        PriorityData number = new PriorityData("6");
         LoginPage loginPage = open("https://app.qase.io/login", LoginPage.class);
-        loginPage.enterLogin("Foux02@rambler.ru");
-        loginPage.enterPassword("Tr@velBG209+");
+        loginPage.enterLogin(openWeb.getUserName());
+        loginPage.enterPassword(openWeb.getUserPassword());
         ProjectsPage projectsPage = loginPage.clickLoginBtn();
         projectsPage.checkUserAuthorized();
         PokemonPage pokemonPage = projectsPage.openProjectPokemon();
@@ -32,8 +36,10 @@ public class FirstTestes {
         defectsPokemon.checkDefectsPokemon();
         CreateDefect createDefect = defectsPokemon.openCreateNewDefect();
         createDefect.checkCreateDefect();
-        createDefect.addCreateNewDefect(create.getCardName(), create.getCardDiscription());
-        createDefect.checkCreateNewDefect(create.getCardName());
+        createDefect.addCreateNewDefect(create.getCardName(), create.getCardDiscription(), number.getPriorityData());
+        defectsPokemon.checkCreateNewDefect(create.getCardName());
+        defectsPokemon.setDeleteDefect();
+        defectsPokemon.checkDeleteDefect();
     }
 
     @AfterMethod
