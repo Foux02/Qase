@@ -23,8 +23,8 @@ public class LoginPage {
         password.clear();
         password.sendKeys(userPassword);
     }
-    public DashboardPage clickLoginBtn() {
+    public ProjectsPage clickLoginBtn() {
         logiBtn.click();
-        return page(DashboardPage.class);
+        return page(ProjectsPage.class);
     }
 }

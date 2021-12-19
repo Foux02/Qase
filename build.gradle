@@ -22,9 +22,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.codeborne/selenide
     implementation group: 'com.codeborne', name: 'selenide', version: '6.0.1'
 
-
-
-
 }
 
 
@@ -32,4 +29,5 @@ task testqase (type: Test){
     useTestNG{
         suites "src/test/resources/tesng.xml"
     }
+
 }
