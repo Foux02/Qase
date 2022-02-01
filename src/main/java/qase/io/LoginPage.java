@@ -18,11 +18,13 @@ public class LoginPage {
         login.clear();
         login.sendKeys(userLogin);
     }
+
     public void enterPassword(String userPassword) {
         password.click();
         password.clear();
         password.sendKeys(userPassword);
     }
+
     public ProjectsPage clickLoginBtn() {
         logiBtn.click();
         return page(ProjectsPage.class);

@@ -1,7 +1,9 @@
 package qase.io;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 
 import static com.codeborne.selenide.Selenide.page;
@@ -17,14 +19,9 @@ public class DefectsPokemon {
     @FindBy(linkText = "Defect75")
     public SelenideElement nameNewDefect;
 
-    @FindBy(xpath = "//td[8]/div/a/i")
-    public SelenideElement choiceDelete;
-
-    @FindBy(linkText = "Delete")
-    public SelenideElement deleteDefect;
-
     @FindBy(xpath = "//button[.='Delete']")
     public SelenideElement deleteBtn;
+
 
     public void checkDefectsPokemon () {
 
@@ -41,16 +38,13 @@ public class DefectsPokemon {
         nameNewDefect.shouldBe(Condition.text(defectName));
     }
 
-    public void setDeleteDefect() {
-        choiceDelete.click();
-        deleteDefect.click();
+    public void setDeleteDefect (String getCardName) {
+        Selenide.$(By.xpath("//td/div[.="+getCardName+"]/../following-sibling::div[5]/a[@href='#']")).click();
         deleteBtn.click();
     }
 
     public void checkDeleteDefect() {
 
-        nameNewDefect.shouldBe(Condition.visible);
+        nameNewDefect.shouldNotBe(Condition.visible);
     }
-
-
 }

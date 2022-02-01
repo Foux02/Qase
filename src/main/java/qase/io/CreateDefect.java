@@ -4,8 +4,6 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
-
 public class CreateDefect {
 
     @FindBy(xpath = "//div[@id='react-app']/div[@class='app']/div//h1")
@@ -45,8 +43,6 @@ public class CreateDefect {
 
     @FindBy(xpath = "//button[.='Create defect']")
     public SelenideElement saveDefectBtn;
-
-
 
     public void checkCreateDefect () {
 
